@@ -5,4 +5,4 @@ def blank_img(w, h, col = 'white'):
     Assumes w, h to be integers
     '''
     img =  Image.new(mode = 'RGB', size = (w, h), color = col)
-    return ImageTk.PhotoImage(img)
+    return img
