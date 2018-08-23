@@ -59,6 +59,7 @@ class Spring(object):
         except ValueError:
             print('self.pos and movement are different sizes/shapes, movement should be [[x1,y1],[x2,y2]]')
 
+<<<<<<< HEAD
     def getForce(self): # Hooke sier:
         pos = self.pos
         '''centre = (pos[0] + pos[1])/2
@@ -104,3 +105,10 @@ print(pos)
 force1, force2 = s1.getForce()
 print(force1, force2)
 '''
+=======
+    def getForce(self): # Hooke says:
+        centre = (self.pos[0] + self.pos[1])/2
+        force1 =
+
+n1 = Node(1)
+>>>>>>> 96d0ed7d3eee94fb3f40bfd4f9bc1a1d0a941063
