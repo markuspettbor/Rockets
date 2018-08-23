@@ -11,7 +11,6 @@ class Screen(object):
         self.master = master
         self.w = w
         self.h = h
-        self.count = 0
         self.set_initial()
 
     def set_initial(self):
@@ -29,6 +28,10 @@ class Screen(object):
         self.frame.configure(image = img)
         self.frame.image = img
         self.frame.grid(column = 0, row = 0)
+
+    def test_screen(self):
+        pass
+
 
 if __name__ == '__main__':
     root = tk.Tk()

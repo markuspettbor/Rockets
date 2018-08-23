@@ -3,31 +3,30 @@ import tkinter as tk
 class Controller(object):
     def __init__(self, master):
         self.master = master
-        self.master.bind('<d>', self.dx, 'right') # USE LAMBDA HERE
-        self.master.bind('<a>', self.dx, 'right')
-        self.master.bind('<w>', self.dy, 'up')
-        self.master.bind('<s>', self.dy, 'down')
-        self.master.bind('<q>', self.rotate, 'ccw')
-        self.master.bind('<e>', self.rotate, 'cw')
+        self.master.bind('<d>', self.dxr)
+        self.master.bind('<a>', self.dxl)
+        self.master.bind('<w>', self.dyu)
+        self.master.bind('<s>', self.dyd)
+        self.master.bind('<e>', self.rotatecw)
+        self.master.bind('<q>', self.rotateccw)
 
+    def dxr(self, event, direction = 'right'):
+        print('Turned right')
 
-    def dx(self, event, direction = 'right'):
-        if direction == 'right':
-            print('Turned right')
-        else:
-            print('Turned left')
+    def dxl(self, event):
+        print('Turned left')
 
-    def dy(self, event, direction = 'up'):
-        if direction == 'up':
-            print('Went up')
-        else:
-            print('Went down')
+    def dyu(self, event, direction = 'up'):
+        print('Went up')
 
-    def rotate(self, event, direction = 'cw'):
-        if direction == 'cw':
-            print('Turned clockwise')
-        else:
-            print('Turned Counter-clockwise')
+    def dyd(self, event):
+        print('Went down')
+
+    def rotatecw(self, event):
+        print('Turned clockwise')
+
+    def rotateccw(self, event):
+        print('Turned counter-clockwise')
 
 if __name__ == '__main__':
     root = tk.Tk()
