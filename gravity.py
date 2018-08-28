@@ -28,14 +28,14 @@ def test():
     import viewscreen as vs
     width = 1920
     height = 1080
-    dt = 1
+    dt = 0.01
     test = vs.Screen(width, height)
     x = Euler_cromer(1000, 10, dt)
     y = Gravity(1000, -100, dt)
     testrun = True
     surf = pg.display.get_surface()
     while testrun:
-        pg.time.delay(int(dt*1000))
+        pg.time.delay(1)
         draw_circle(int(x.s), int(y.s), surf)
         pg.display.flip()
         x.calculate()

@@ -15,7 +15,7 @@ class Screen(object):
         pg.display.quit()
 
 def test_draw_random_circle(surf):
-    radius = 1
+    radius = 0
     x = random.randint(0, width- radius)
     y = random.randint(0, height- radius)
     pg.draw.circle(surf, (255,255,255,255), (x, y), radius)
@@ -36,17 +36,26 @@ if __name__ == '__main__':
     clock = pg.time.Clock()
     surf = pg.display.get_surface()
     numstars = 0
+    addstars = True
     while testrun:
-        time = clock.tick()
-        test_timer(surf, 'Number of stars= ' + str(numstars))
-        numstars += 1
-        test_draw_random_circle(surf)
-        pg.display.flip()
+
+        if addstars:
+            test_draw_random_circle(surf)
+            if numstars % 1000 == 0:
+                pg.display.flip()
+            test_timer(surf, 'Number of stars= ' + str(numstars))
+            numstars += 1
+
         for event in pg.event.get():
-            if event.type == pg.QUIT:
+            if event.type == pg.KEYDOWN and event.key == pg.K_q:
                 test.close()
                 testrun = False
+            elif event.type == pg.KEYDOWN and event.key == pg.K_p and addstars == True:
+                addstars = False
+            elif event.type == pg.KEYDOWN and event.key == pg.K_p and addstars == False:
+                addstars = True
 
-        if numstars > 10**4:
-            test.close()
+        keys = pg.key.get_pressed()
+        if keys[pg.K_DOWN]:
             testrun = False
+            print('stop')
