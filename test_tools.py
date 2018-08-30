@@ -33,10 +33,11 @@ class Wall:
         p = np.array([0, 0, a/c*x0 + b/c*y0 + z0])
         tryvec = p - self.position
         othervec = np.cross(tryvec, self.normal_vector)
-        res1 = self.position + tryvec/np.linalg.norm(tryvec)*self.w + othervec/np.linalg.norm(othervec)*self.h
-        res2 = self.position + tryvec/np.linalg.norm(tryvec)*self.w
-        res3 = self.position + othervec/np.linalg.norm(othervec)*self.h
-        return res1, res2, res3, self.position
+        res1 = self.position + tryvec/np.linalg.norm(tryvec)*self.w/2 + othervec/np.linalg.norm(othervec)*self.h/2
+        res2 = self.position + tryvec/np.linalg.norm(tryvec)*self.w/2 - othervec/np.linalg.norm(othervec)*self.h/2
+        res3 = self.position - tryvec/np.linalg.norm(tryvec)*self.w/2 + othervec/np.linalg.norm(othervec)*self.h/2
+        res4 = self.position - tryvec/np.linalg.norm(tryvec)*self.w/2 - othervec/np.linalg.norm(othervec)*self.h/2
+        return res1, res2, res3, res4, self.position
 
 
 if __name__ == '__main__':
@@ -46,17 +47,45 @@ if __name__ == '__main__':
     testrun = True
     clock = pg.time.Clock()
     surf = pg.display.get_surface()
-    count = 0
+    countx = 0
+    county = 0
+    timer = 0
+    grav = 0
     wall = Wall(100, 100, np.array([0,0, 1]), np.array([1000, 1000, 0]))
     while testrun:
-        pg.time.delay(10)
-        for j in wall.get_corners():
-            pg.draw.circle(surf, (255, 255, 255, 255), (int(j[0]), int(j[1])-count), 0)
-        pg.display.flip()
+        pressed = pg.key.get_pressed()
+        w = pressed[pg.K_w]
+        d = pressed[pg.K_d]
+        s = pressed[pg.K_s]
+        a = pressed[pg.K_a]
+        boost = pressed[pg.K_b]
+
+        if boost:
+            vel = timer
+            if timer > 40:
+                timer = 0
+            timer += 1
+        else:
+            vel = 1
+
+        if w:
+            county += vel
+        if s:
+            county -= vel
+        if d:
+            countx -= vel
+        if a:
+            countx += vel
+
+        grav += 2
+
+        pg.time.delay(30)
         surf.fill((0,0,0))
+        for j in wall.get_corners():
+            pg.draw.circle(surf, (255, 255, 255, 255), (int(j[0]) - countx, int(j[1]) - county + grav), 10)
+        pg.display.flip()
+
         for event in pg.event.get():
             if event.type == pg.KEYDOWN and event.key == pg.K_q:
                 test.close()
                 testrun = False
-
-        count +=1
